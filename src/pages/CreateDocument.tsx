@@ -3,6 +3,7 @@ import { Mic, FileText, FileBarChart, Briefcase, ClipboardList } from "lucide-re
 import { useNavigate } from "react-router-dom";
 import { MobileShell } from "@/components/MobileShell";
 import { PageHeader, GradientButton, Chip, IconTile } from "@/components/ui-bits";
+import { getDoc, setDoc } from "@/lib/docStore";
 
 const suggestions = ["Business Proposal", "Project Report", "Resume", "Marketing Plan", "Invoice"];
 const templates = [
@@ -15,6 +16,18 @@ const templates = [
 const CreateDocument = () => {
   const nav = useNavigate();
   const [prompt, setPrompt] = useState("");
+
+  const start = (templateName?: string) => {
+    const cur = getDoc();
+    if (templateName) {
+      setDoc({ title: `${templateName} — ${cur.client}` });
+    }
+    if (prompt.trim()) {
+      setDoc({ subtitle: prompt.slice(0, 140) });
+    }
+    nav("/settings");
+  };
+
   return (
     <MobileShell>
       <PageHeader title="Create Document" subtitle="Describe what you want to build" />
@@ -51,8 +64,8 @@ const CreateDocument = () => {
             {templates.map((t) => (
               <button
                 key={t.name}
-                onClick={() => nav("/settings")}
-                className="glass-card p-4 text-left btn-press"
+                onClick={() => start(t.name)}
+                className="glass-card p-4 text-left btn-press hover:scale-[1.02] transition-transform"
               >
                 <IconTile gradient={t.g}>
                   <t.icon className="w-5 h-5" />
@@ -64,7 +77,7 @@ const CreateDocument = () => {
           </div>
         </div>
 
-        <GradientButton onClick={() => nav("/settings")}>Generate Document</GradientButton>
+        <GradientButton onClick={() => start()}>Generate Document</GradientButton>
       </div>
     </MobileShell>
   );
