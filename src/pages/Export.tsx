@@ -20,6 +20,7 @@ const Export = () => {
   const [busy, setBusy] = useState(false);
   const nav = useNavigate();
   const doc = getDoc();
+  const hiddenRef = useRef<HTMLDivElement>(null);
 
   const pageCount = useMemo(() => {
     let n = doc.sections.length;
@@ -30,22 +31,21 @@ const Export = () => {
 
   const handleExport = async () => {
     setBusy(true);
+    toast.loading("Preparing export...", { id: "exp" });
     try {
-      if (fmt === "PDF") {
-        downloadPdf();
+      if (fmt === "PDF" || fmt === "PPTX") {
+        if (!hiddenRef.current) throw new Error("not ready");
+        await exportA4ToPdf(hiddenRef.current, fmt === "PPTX" ? "ai-document-generator-output.pdf" : PDF_FILENAME);
       } else if (fmt === "DOCX") {
         downloadDocx();
       } else if (fmt === "TXT") {
         downloadTxt();
-      } else {
-        // PPTX → fall back to PDF (most viewers accept)
-        downloadPdf();
       }
-      toast.success(`${fmt} downloaded`, { description: `${doc.title}` });
+      toast.success(`${fmt} downloaded`, { id: "exp", description: doc.title });
     } catch (e) {
-      toast.error("Export failed");
+      toast.error("Export failed", { id: "exp" });
     } finally {
-      setTimeout(() => setBusy(false), 400);
+      setTimeout(() => setBusy(false), 300);
     }
   };
 
