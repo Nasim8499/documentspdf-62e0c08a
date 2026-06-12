@@ -1,5 +1,42 @@
 // Simple in-memory document store + PDF/DOCX/TXT export utilities
 import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+
+export const PDF_FILENAME = "ai-document-generator-output.pdf";
+
+/**
+ * Capture rendered A4 pages from the DOM and emit a real PDF.
+ * Container should hold one or more elements with [data-a4-page].
+ */
+export async function exportA4ToPdf(container: HTMLElement, filename = PDF_FILENAME) {
+  const pageEls = Array.from(container.querySelectorAll<HTMLElement>("[data-a4-page]"));
+  if (!pageEls.length) throw new Error("No A4 pages found");
+
+  // Temporarily ensure all pages are visible for capture
+  const prevDisplay: string[] = pageEls.map((el) => el.style.display);
+  pageEls.forEach((el) => (el.style.display = "block"));
+
+  const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
+  const pageW = pdf.internal.pageSize.getWidth();
+  const pageH = pdf.internal.pageSize.getHeight();
+
+  try {
+    for (let i = 0; i < pageEls.length; i++) {
+      const canvas = await html2canvas(pageEls[i], {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        logging: false,
+      });
+      const img = canvas.toDataURL("image/jpeg", 0.95);
+      if (i > 0) pdf.addPage();
+      pdf.addImage(img, "JPEG", 0, 0, pageW, pageH, undefined, "FAST");
+    }
+    pdf.save(filename);
+  } finally {
+    pageEls.forEach((el, i) => (el.style.display = prevDisplay[i]));
+  }
+}
 
 export type DocFormat = "PDF" | "DOCX" | "TXT" | "PPTX";
 

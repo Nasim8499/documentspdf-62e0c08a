@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Download, Share2, FileText, Check, Copy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { MobileShell } from "@/components/MobileShell";
 import { PageHeader, GradientButton } from "@/components/ui-bits";
-import { downloadDocx, downloadPdf, downloadTxt, getDoc, shareDoc } from "@/lib/docStore";
+import { A4Document } from "@/components/A4Document";
+import { downloadDocx, downloadTxt, exportA4ToPdf, getDoc, PDF_FILENAME, shareDoc } from "@/lib/docStore";
 
 const formats = [
   { name: "PDF", g: "primary" },
@@ -19,6 +20,7 @@ const Export = () => {
   const [busy, setBusy] = useState(false);
   const nav = useNavigate();
   const doc = getDoc();
+  const hiddenRef = useRef<HTMLDivElement>(null);
 
   const pageCount = useMemo(() => {
     let n = doc.sections.length;
@@ -29,27 +31,33 @@ const Export = () => {
 
   const handleExport = async () => {
     setBusy(true);
+    toast.loading("Preparing export...", { id: "exp" });
     try {
-      if (fmt === "PDF") {
-        downloadPdf();
+      if (fmt === "PDF" || fmt === "PPTX") {
+        if (!hiddenRef.current) throw new Error("not ready");
+        await exportA4ToPdf(hiddenRef.current, fmt === "PPTX" ? "ai-document-generator-output.pdf" : PDF_FILENAME);
       } else if (fmt === "DOCX") {
         downloadDocx();
       } else if (fmt === "TXT") {
         downloadTxt();
-      } else {
-        // PPTX → fall back to PDF (most viewers accept)
-        downloadPdf();
       }
-      toast.success(`${fmt} downloaded`, { description: `${doc.title}` });
+      toast.success(`${fmt} downloaded`, { id: "exp", description: doc.title });
     } catch (e) {
-      toast.error("Export failed");
+      toast.error("Export failed", { id: "exp" });
     } finally {
-      setTimeout(() => setBusy(false), 400);
+      setTimeout(() => setBusy(false), 300);
     }
   };
 
   return (
     <MobileShell>
+      {/* Offscreen A4 render for capture */}
+      <div
+        aria-hidden
+        style={{ position: "fixed", left: -99999, top: 0, width: 794, pointerEvents: "none" }}
+      >
+        <A4Document ref={hiddenRef} doc={doc} />
+      </div>
       <PageHeader title="Export Options" subtitle="Choose your perfect format" />
       <div className="px-6 space-y-5">
         <div className="flex flex-col items-center pt-2">
