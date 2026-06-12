@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Download, Share2, FileText, Check, Copy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { MobileShell } from "@/components/MobileShell";
 import { PageHeader, GradientButton } from "@/components/ui-bits";
-import { downloadDocx, downloadPdf, downloadTxt, getDoc, shareDoc } from "@/lib/docStore";
+import { A4Document } from "@/components/A4Document";
+import { downloadDocx, downloadTxt, exportA4ToPdf, getDoc, PDF_FILENAME, shareDoc } from "@/lib/docStore";
 
 const formats = [
   { name: "PDF", g: "primary" },
