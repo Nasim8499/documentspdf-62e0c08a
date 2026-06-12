@@ -51,6 +51,13 @@ const Export = () => {
 
   return (
     <MobileShell>
+      {/* Offscreen A4 render for capture */}
+      <div
+        aria-hidden
+        style={{ position: "fixed", left: -99999, top: 0, width: 794, pointerEvents: "none" }}
+      >
+        <A4Document ref={hiddenRef} doc={doc} />
+      </div>
       <PageHeader title="Export Options" subtitle="Choose your perfect format" />
       <div className="px-6 space-y-5">
         <div className="flex flex-col items-center pt-2">
