@@ -9,7 +9,7 @@ export const PageHeader = ({
   back = true,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   right?: ReactNode;
   back?: boolean;
 }) => {
