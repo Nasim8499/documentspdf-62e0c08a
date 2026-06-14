@@ -677,10 +677,14 @@ export function applyBuilder(type: BuilderType, values: Record<string, string>, 
   const cfg = BUILDERS[type];
   const patch = cfg.build(values, country);
   const cur = getDoc();
+  const brand =
+    type === "company" || type === "employment"
+      ? { name: values.companyName || values.sponsor || VISAHOBE_BRAND.name, color: VISAHOBE_BRAND.color, accent: VISAHOBE_BRAND.accent }
+      : cur.brand;
   setDoc({
     ...patch,
     date: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
-    brand: cur.brand,
+    brand,
     options: cur.options,
   } as Partial<DocData>);
 }
