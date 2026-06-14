@@ -7,7 +7,9 @@ export type BuilderType =
   | "passport"
   | "visa"
   | "workorder"
-  | "acknowledgement";
+  | "acknowledgement"
+  | "company"
+  | "employment";
 
 export interface BuilderField {
   key: string;
