@@ -1,4 +1,4 @@
-import { Bell, Search, FileText, MessageCircle, Sparkles, Bot, ArrowRight, FileSignature, Mail, BookUser, Plane, Wrench, FileCheck2 } from "lucide-react";
+import { Bell, Search, FileText, MessageCircle, Sparkles, Bot, ArrowRight, FileSignature, Mail, BookUser, Plane, Wrench, FileCheck2, Building2, BriefcaseBusiness } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MobileShell } from "@/components/MobileShell";
 import { Card, IconTile } from "@/components/ui-bits";
@@ -6,6 +6,8 @@ import { Card, IconTile } from "@/components/ui-bits";
 const quick = [
   { to: "/create", icon: FileText, label: "Create Document", g: "primary" as const },
   { to: "/chat", icon: MessageCircle, label: "AI Chat Assistant", g: "sunset" as const },
+  { to: "/builder/company", icon: Building2, label: "Company Details", g: "ocean" as const },
+  { to: "/builder/employment", icon: BriefcaseBusiness, label: "Work Permit", g: "mint" as const },
 ];
 
 const builders = [
@@ -15,6 +17,8 @@ const builders = [
   { to: "/builder/visa", icon: Plane, label: "Visa Form", g: "candy" as const },
   { to: "/builder/workorder", icon: Wrench, label: "Work Order", g: "mint" as const },
   { to: "/builder/acknowledgement", icon: FileCheck2, label: "Acknowledge", g: "primary" as const },
+  { to: "/builder/company", icon: Building2, label: "Company Profile", g: "sunset" as const },
+  { to: "/builder/employment", icon: BriefcaseBusiness, label: "Work Permit", g: "ocean" as const },
 ];
 
 const recent = [
