@@ -162,7 +162,7 @@ const Builder = () => {
           </div>
         </div>
 
-        <GradientButton onClick={() => generate(true)} variant={cfg.gradient}>
+        <GradientButton onClick={() => generate(true)} variant={(cfg.gradient === "candy" ? "primary" : cfg.gradient) as "primary" | "sunset" | "ocean" | "mint"}>
           Generate & Open Preview
         </GradientButton>
       </div>

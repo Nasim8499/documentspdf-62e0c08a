@@ -1,4 +1,4 @@
-import { Bell, Search, FileText, MessageCircle, MapPin, LayoutGrid, Sparkles, Bot, ArrowRight } from "lucide-react";
+import { Bell, Search, FileText, MessageCircle, Sparkles, Bot, ArrowRight, FileSignature, Mail, BookUser, Plane, Wrench, FileCheck2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MobileShell } from "@/components/MobileShell";
 import { Card, IconTile } from "@/components/ui-bits";
@@ -6,8 +6,15 @@ import { Card, IconTile } from "@/components/ui-bits";
 const quick = [
   { to: "/create", icon: FileText, label: "Create Document", g: "primary" as const },
   { to: "/chat", icon: MessageCircle, label: "AI Chat Assistant", g: "sunset" as const },
-  { to: "/itinerary", icon: MapPin, label: "Smart Itinerary", g: "mint" as const },
-  { to: "/templates", icon: LayoutGrid, label: "Templates Library", g: "candy" as const },
+];
+
+const builders = [
+  { to: "/builder/contract", icon: FileSignature, label: "Contract", g: "primary" as const },
+  { to: "/builder/offer", icon: Mail, label: "Offer Letter", g: "sunset" as const },
+  { to: "/builder/passport", icon: BookUser, label: "Passport", g: "ocean" as const },
+  { to: "/builder/visa", icon: Plane, label: "Visa Form", g: "candy" as const },
+  { to: "/builder/workorder", icon: Wrench, label: "Work Order", g: "mint" as const },
+  { to: "/builder/acknowledgement", icon: FileCheck2, label: "Acknowledge", g: "primary" as const },
 ];
 
 const recent = [
@@ -80,6 +87,30 @@ const Home = () => {
                   <q.icon className="w-5 h-5" />
                 </IconTile>
                 <p className="mt-3 text-sm font-semibold leading-snug">{q.label}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Country-Aware Builders */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-bold">Country-Aware Builders</p>
+            <button onClick={() => nav("/templates")} className="text-xs font-semibold text-primary">
+              All
+            </button>
+          </div>
+          <div className="grid grid-cols-3 gap-2.5">
+            {builders.map((b) => (
+              <button
+                key={b.to}
+                onClick={() => nav(b.to)}
+                className="glass-card p-3 text-left btn-press hover:scale-[1.03] transition-transform"
+              >
+                <IconTile gradient={b.g} size="sm">
+                  <b.icon className="w-4 h-4" />
+                </IconTile>
+                <p className="mt-2 text-[11px] font-semibold leading-tight">{b.label}</p>
               </button>
             ))}
           </div>
