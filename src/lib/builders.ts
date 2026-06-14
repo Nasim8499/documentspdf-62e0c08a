@@ -456,6 +456,212 @@ const acknowledgement: BuilderConfig = {
   },
 };
 
+// ------------- Company Profile (VisaHOBe-style 10 page) -------------
+const VISAHOBE_BRAND = {
+  name: "VisaHOBe PTE. LTD.",
+  color: "#0B0B0C",
+  accent: "#94886E",
+};
+
+const company: BuilderConfig = {
+  type: "company",
+  title: "Company Profile",
+  description: "10-page corporate profile (VisaHOBe-style)",
+  gradient: "sunset",
+  fields: [
+    { key: "companyName", label: "Company Name", required: true, placeholder: "VisaHOBe PTE. LTD." },
+    { key: "tagline", label: "Tagline", placeholder: "Global Recruiter & Visa Consultancy Partner" },
+    { key: "uen", label: "Registration / UEN", placeholder: "202524173E" },
+    { key: "hqAddress", label: "HQ Address", type: "textarea", placeholder: "68 Circular Road, #02-01, 049422, Singapore" },
+    { key: "branchAddress", label: "Branch Address", type: "textarea", placeholder: "Gulshan, Dhaka, Bangladesh" },
+    { key: "website", label: "Website", placeholder: "visahobe.com" },
+    { key: "email", label: "Email", placeholder: "contact@visahobe.com" },
+    { key: "phone", label: "Phone", placeholder: "+1 (323) 601-8257" },
+    { key: "founded", label: "Founded", placeholder: "2025" },
+    { key: "industries", label: "Industries Served", placeholder: "Construction, Manufacturing, Service" },
+    { key: "countries", label: "Countries Served", type: "textarea", placeholder: "Singapore, Australia, Cambodia, Serbia, Russia, Belarus, Kuwait, Bahrain" },
+    { key: "workersCount", label: "Active Workers Pool", type: "number", placeholder: "70" },
+    { key: "docRef", label: "Document Reference", placeholder: "VHB-CP-2026" },
+  ],
+  build: (v, c) => {
+    const country = COUNTRIES.find((x) => x.code === c)!;
+    const name = v.companyName || "VisaHOBe PTE. LTD.";
+    const tagline = v.tagline || "Global Recruiter & Visa Consultancy Partner";
+    const countries = v.countries || "Singapore, Australia, Cambodia, Serbia, Russia, Belarus, Kuwait, Bahrain";
+    return {
+      title: `${name} — Corporate Profile`,
+      subtitle: tagline,
+      author: name,
+      client: "Global Partners & Employers",
+      sections: [
+        {
+          heading: "01 · Company Introduction",
+          body: `${name} is a ${country.name}-registered Global Recruiter and Visa Consultancy Partner managing international manpower coordination, visa guidance, documentation support, and client mobility.\n\nRegistration: ${v.uen || "—"}\nFounded: ${v.founded || "2025"}\nHeadquarters: ${v.hqAddress || "—"}\nBranch: ${v.branchAddress || "—"}\n\nOur primary objective is to connect skilled workforce from South Asia with international employers through a transparent, compliance-first, long-term ecosystem.`,
+        },
+        {
+          heading: "02 · Our Vision",
+          body: `To establish ${name} as the most trusted, transparent, compliant and long-term partner in the international labor market and visa service sector — a world where skilled workers have equitable access to global opportunities and employers can confidently source talent through professional, ethical channels.`,
+        },
+        {
+          heading: "03 · Our Mission",
+          body: `• Provide international-standard documentation support with meticulous attention to detail.\n• Maintain an ethical manpower coordination model that prioritizes worker welfare.\n• Ensure transparent visa guidance and dedicated client support.\n• Create realistic pathways through risk-aware professional consultation.\n• Build a sustainable global ecosystem of employers, workers and processing partners.`,
+        },
+        {
+          heading: "04 · Core Values",
+          body: `01. Integrity — Honest, reliable communication.\n02. Transparency — Full process visibility at every step.\n03. Compliance — Adherence to all legal mandates.\n04. Excellence — Elite standards and attention to detail.`,
+        },
+        {
+          heading: "05 · What We Offer",
+          body: `A — Manpower Recruitment & Coordination: skilled / semi-skilled sourcing, screening, documentation, employer matching.\n\nB — Visa Consultancy & Travel Support: work, student, tourist and business visas across multiple jurisdictions.\n\nC — Documentation & Compliance: attestation, translation, verification and authority-grade file packaging.`,
+        },
+        {
+          heading: "06 · Global Reach",
+          body: `Recruitment coordination and visa consultancy services across destination countries: ${countries}.`,
+        },
+        {
+          heading: "07 · Our Process",
+          body: `1. Client Consultation — Goals & skill assessment.\n2. Roadmap Planning — Scope & timeline definition.\n3. Document Verification — Review & authentication.\n4. File Preparation — Authority-standard packaging.\n5. Submission Tracking — Application & progress filing.\n6. Post-Visa Support — Relocation & liaison.`,
+        },
+        {
+          heading: "08 · Why Choose Us",
+          body: `Transparent Process — Full case updates at all times.\nProfessional Files — Authority-approved file standards.\nCompliance-First — Legal safety across borders.\nLong-Term Goals — Ethical, sustainable models.`,
+        },
+        {
+          heading: "09 · Talent Pool",
+          body: `${name} maintains a roster of over ${v.workersCount || "70"} pre-screened worker profiles. Each has undergone preliminary checks covering documentation readiness, skill sets and basic language capability.\n\nIndustries: ${v.industries || "Construction, Manufacturing, Service"}.\nDistribution: Construction 45% · Manufacturing 30% · Service 15% · Others 10%.\nReadiness: Passport active · Documents verified · Basic English · Trainable skills.`,
+        },
+        {
+          heading: "10 · Compliance, Roadmap & Contact",
+          body: `Compliance & Ethics: no unrealistic timeline projections · adherence to cross-border mandates · no false guarantees on approvals · full privacy & credentials safety.\n\nDisclaimer: Final visa approval remains strictly with the immigration ministries of destination countries.\n\nFuture Roadmap: Digital Client Dashboard · AI-Assisted Workflow Integration · Scaling deployments across 15+ target nations by 2028.\n\nContact:\nWebsite: ${v.website || "visahobe.com"}\nEmail: ${v.email || "contact@visahobe.com"}\nPhone: ${v.phone || "+1 (323) 601-8257"}\nReference: ${v.docRef || "VHB-CP-2026"}\n\n© ${new Date().getFullYear()} ${name} · All rights reserved.`,
+        },
+      ],
+    };
+  },
+};
+
+// ------------- Employment Work Permit (10-page) -------------
+const employment: BuilderConfig = {
+  type: "employment",
+  title: "Employment / Work Permit",
+  description: "10-page work permit package, country-aware",
+  gradient: "ocean",
+  fields: [
+    // Employer (prefilled with VisaHOBe partner-style data)
+    { key: "employer", label: "Employer / Company", required: true, placeholder: "Labourpower Recruitment Services Pty Ltd" },
+    { key: "employerAddress", label: "Employer Address", type: "textarea", placeholder: "Level 8, 100 William Street, Sydney NSW 2011" },
+    { key: "employerAbn", label: "Employer Reg / ABN / UEN", placeholder: "ABN 12 345 678 901" },
+    { key: "employerContact", label: "Employer Contact / HR", placeholder: "HR Department · hr@employer.com" },
+    // Worker
+    { key: "employee", label: "Employee Full Name", required: true, placeholder: "MD Ashraf Ali" },
+    { key: "passportNo", label: "Passport Number", required: true },
+    { key: "passportExpiry", label: "Passport Expiry", type: "date" },
+    { key: "dob", label: "Date of Birth", type: "date" },
+    { key: "nationality", label: "Nationality", placeholder: "Bangladeshi" },
+    { key: "address", label: "Home Address", type: "textarea" },
+    // Job
+    { key: "position", label: "Position / Occupation", required: true, placeholder: "Construction Labourer" },
+    { key: "anzscoCode", label: "Occupation Code (ANZSCO / SOC / SSOC)", placeholder: "821111" },
+    { key: "workSite", label: "Work Site / Location", placeholder: "Various NSW project sites" },
+    { key: "startDate", label: "Commencement Date", type: "date", required: true },
+    { key: "permitNo", label: "Work Permit / Visa No.", placeholder: "AUS5496524" },
+    { key: "permitValidity", label: "Permit Valid Until", type: "date" },
+    { key: "weeklyHours", label: "Weekly Hours", type: "number", placeholder: "38" },
+    { key: "hourlyRate", label: "Hourly Rate", type: "number", placeholder: "32" },
+    // Sponsor
+    { key: "sponsor", label: "Recruiting / Sponsor Partner", placeholder: "VisaHOBe PTE. LTD." },
+    { key: "sponsorRef", label: "Sponsor Reference No.", placeholder: "VHB-WP-2026-001" },
+  ],
+  extraByCountry: {
+    AU: [{ key: "subclass", label: "Visa Subclass", placeholder: "482 / 494 / 400" }],
+    AE: [{ key: "molNumber", label: "MOHRE / Labour Card No." }],
+    SA: [{ key: "iqama", label: "Iqama Number" }],
+    SG: [{ key: "fin", label: "FIN Number" }],
+    GB: [{ key: "cos", label: "Certificate of Sponsorship (CoS)" }],
+  },
+  build: (v, c) => {
+    const country = COUNTRIES.find((x) => x.code === c)!;
+    const law = countryClause(
+      c,
+      {
+        AU: "the Fair Work Act 2009 (Cth) and the Migration Act 1958 (Cth)",
+        AE: "UAE Federal Decree-Law No. 33 of 2021 and MOHRE regulations",
+        SA: "the Saudi Labor Law and Ministry of HRSD regulations",
+        SG: "the Employment Act and Employment of Foreign Manpower Act of Singapore",
+        GB: "the UK Immigration Rules and Worker / Skilled Worker route",
+        US: "the Immigration and Nationality Act and applicable DOL regulations",
+      },
+      "applicable labour and immigration laws"
+    );
+    const authority = countryClause(
+      c,
+      {
+        AU: "Department of Home Affairs, Australia",
+        AE: "MOHRE / ICP — UAE",
+        SA: "Ministry of Human Resources and Social Development, KSA",
+        SG: "Ministry of Manpower, Singapore",
+        GB: "UK Visas and Immigration (UKVI)",
+        US: "USCIS — Department of Homeland Security",
+      },
+      `${country.name} immigration & labour authority`
+    );
+    const employer = v.employer || "Employer";
+    const employee = v.employee || "Employee";
+    const sponsor = v.sponsor || "VisaHOBe PTE. LTD.";
+    const rate = Number(v.hourlyRate || 0);
+    const hours = Number(v.weeklyHours || 0);
+    const weekly = (rate * hours).toLocaleString();
+
+    return {
+      title: `Work Permit & Employment Package — ${employee}`,
+      subtitle: `${v.position || "Position"} · ${employer} · ${country.flag} ${country.name}`,
+      author: sponsor,
+      client: employee,
+      sections: [
+        {
+          heading: "01 · Cover & Reference",
+          body: `Document: Work Permit & Employment Package\nWorker: ${employee}\nEmployer: ${employer}\nDestination: ${country.flag} ${country.name}\nPermit / Visa No.: ${v.permitNo || "—"}\nValid Until: ${v.permitValidity || "—"}\nSponsor: ${sponsor}\nSponsor Reference: ${v.sponsorRef || "—"}\nIssued: ${new Date().toLocaleDateString()}`,
+        },
+        {
+          heading: "02 · Employer Details",
+          body: `Company: ${employer}\nRegistration: ${v.employerAbn || "—"}\nRegistered Address:\n${v.employerAddress || "—"}\nContact: ${v.employerContact || "—"}\nJurisdiction: ${country.name}\nGoverning Law: ${law}.`,
+        },
+        {
+          heading: "03 · Worker Particulars",
+          body: `Full Name: ${employee}\nDate of Birth: ${v.dob || "—"}\nNationality: ${v.nationality || "—"}\nPassport No.: ${v.passportNo || "—"}\nPassport Expiry: ${v.passportExpiry || "—"}\nHome Address:\n${v.address || "—"}`,
+        },
+        {
+          heading: "04 · Position & Duties",
+          body: `Position: ${v.position || "—"}\nOccupation Code: ${v.anzscoCode || "—"}\nWork Site / Location: ${v.workSite || "—"}\nReporting: Site Supervisor / Project Manager\n\nThe Employee shall perform all duties associated with the position, comply with site safety, attend induction and follow all reasonable directions issued by the Employer.`,
+        },
+        {
+          heading: "05 · Commencement & Permit",
+          body: `Commencement Date: ${v.startDate || "—"}\nWork Permit / Visa Number: ${v.permitNo || "—"}\nValid Until: ${v.permitValidity || "—"}\nIssuing Authority: ${authority}.\n\nEmployment is conditional on continuous validity of the above permit. The Employee shall not undertake work outside the conditions of this permit.`,
+        },
+        {
+          heading: "06 · Hours, Pay & Allowances",
+          body: `Standard Weekly Hours: ${hours || "—"}\nHourly Rate: ${country.currency} ${rate || "—"}\nEstimated Weekly Gross: ${country.currency} ${weekly}\nPayment Cycle: Weekly via direct bank transfer.\nOvertime: Paid in accordance with ${law}.\nDeductions: Statutory taxes, superannuation / social contributions as applicable.`,
+        },
+        {
+          heading: "07 · Leave, Insurance & Welfare",
+          body: `Annual Leave: As prescribed by ${country.name} law.\nPublic Holidays: As per official calendar.\nSick Leave: Statutory entitlement.\nInsurance: Workers' compensation / medical cover arranged by the Employer.\nAccommodation: As separately agreed in the placement letter.\nRepatriation: Per sponsor agreement with ${sponsor}.`,
+        },
+        {
+          heading: "08 · Conduct, Confidentiality & Termination",
+          body: `The Employee shall observe all workplace policies, code of conduct, anti-harassment, drug & alcohol, and confidentiality obligations.\n\nTermination: Either party may terminate by written notice in accordance with ${law}. Summary termination is permitted for serious misconduct, breach of visa conditions, or unauthorised absence.`,
+        },
+        {
+          heading: "09 · Sponsor Acknowledgement",
+          body: `This placement is coordinated by ${sponsor} as the recruiting / mobility partner. The Sponsor confirms that the Employee has been screened for documentation readiness, skill suitability and basic communication ability prior to deployment.\n\nSponsor Reference: ${v.sponsorRef || "—"}\nSponsor Contact: contact@visahobe.com  ·  +1 (323) 601-8257`,
+        },
+        {
+          heading: "10 · Declaration & Signatures",
+          body: `The parties acknowledge that they have read, understood and agreed to the terms set out in this Work Permit & Employment Package, governed by ${law}.\n\nFor and on behalf of ${employer}\nName: _______________________\nSignature: _______________________   Date: ____________\n\nEmployee (${employee})\nSignature: _______________________   Date: ____________\n\nFor Sponsor (${sponsor})\nSignature: _______________________   Date: ____________`,
+        },
+      ],
+    };
+  },
+};
+
 export const BUILDERS: Record<BuilderType, BuilderConfig> = {
   contract,
   offer,
@@ -463,6 +669,8 @@ export const BUILDERS: Record<BuilderType, BuilderConfig> = {
   visa,
   workorder,
   acknowledgement,
+  company,
+  employment,
 };
 
 export function applyBuilder(type: BuilderType, values: Record<string, string>, country: string) {
