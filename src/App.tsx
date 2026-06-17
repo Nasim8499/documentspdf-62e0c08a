@@ -18,6 +18,7 @@ import Export from "./pages/Export";
 import Analytics from "./pages/Analytics";
 import Itinerary from "./pages/Itinerary";
 import Builder from "./pages/Builder";
+import Studio from "./pages/Studio";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/builder/:type" element={<Builder />} />
+          <Route path="/studio" element={<Studio />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
